@@ -1,6 +1,8 @@
 const fs=require('fs');
 const path=require('path');
 
+const Student=require('../models/studentModel')
+
 //student data model
 const students=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/students.json')).toString());
 
@@ -13,18 +15,12 @@ const getLatestId=()=>{
         return 1;
     }
     
-}
+}  
 
 //Get All Students
-const getAllStudents=(req,res)=>{
-    if(students.length>0){
-        res.status(200).json(students);
-    }
-    else{
-        res.status(404).json({
-            message : 'student data not found'
-        })
-    }
+const getAllStudents=async (req,res)=>{
+   let data=await Student.find();
+   res.status(200).json(data)
    
     // res.send('Ami');
 }
@@ -45,27 +41,15 @@ const getSingleStudent=(req,res)=>{
     
 }
 
-const createStudent=(req,res)=>{
-    if(req.body.name!= '' || req.body.skill!= '' || req.body.age!=''){
-        students.push({
-            id : getLatestId(),
-            name : req.body.name,
-            age : req.body.age,
-            skill : req.body.skill
-        });
-        
-    fs.writeFileSync(path.join(__dirname,'../data/students.json'), JSON.stringify(students) );
-        
-    res.json({
-        message : "students data Created successfully"
+const createStudent= async (req,res)=>{
+    let data=await Student.create({
+        name : req.body.name,
+        age : req.body.age,
+        skill : req.body.skill
     });
-    }
-    else{
-        res.status(400).json({
-            message : 'You have to put from data'
-        })
-    }
-
+    res.status(201).json({
+        message : "student data added successfully"
+    })
 }
 const updateStudent=(req,res)=>{
     res.send('we are updating students Data');
