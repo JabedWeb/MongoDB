@@ -27,17 +27,11 @@ const getAllStudents=async (req,res)=>{
 
 //Get single Students
 
-const getSingleStudent=(req,res)=>{
+const getSingleStudent=async (req,res)=>{
 
     let id=req.params.id;
-    if(students.some(data=>data.id==id)){
-        res.status(200).json(students.find(data=> data.id==id))
-    }
-    else{
-        res.status(404).json({
-            message :'This student data not found'
-        })
-    }
+    let single_data=await Student.findById(id);
+    res.status(200).json(single_data)
     
 }
 
@@ -51,23 +45,23 @@ const createStudent= async (req,res)=>{
         message : "student data added successfully"
     })
 }
-const updateStudent=(req,res)=>{
-    res.send('we are updating students Data');
-}
-const deleteStudent=(req,res)=>{
+const updateStudent= async(req,res)=>{
+
     let id =req.params.id;
-    if(students.some(data=>data.id==id)){
-        let students_data=students.filter(data=>data.id!=id);
-        fs.writeFileSync(path.join(__dirname,'../data/students.json'),JSON.stringify(students_data))
-        res.status(202).json({
-            message : " Students Data Deleted"
-        })
-    }
-    else{
-        res.status(400).json({
-            message :'Students not found'
-        })
-    }
+    await Student.findByIdAndUpdate(id, req.body,{
+        new : true
+    });
+    res.status(200).json({
+        message : "Student Updated"
+    })
+}
+const deleteStudent=async (req,res)=>{
+    let id =req.params.id;
+    await Student.findByIdAndDelete(id);
+    res.status(200).json({
+        message : " Successfully Deleted"
+    })
+
 }
 module.exports={
     getAllStudents,
