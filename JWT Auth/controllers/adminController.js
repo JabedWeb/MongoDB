@@ -67,10 +67,10 @@ const deleteAdmin= async (req,res)=>{
 //admin profile
 
 const adminProfile=(req,res)=>{
-    res.send('this is admin profile')
+    res.json(req.user)
 }
 const adminHome=(req,res)=>{
-    res.send('this is Home profile')
+    res.json(req.user)
 }
 
 
