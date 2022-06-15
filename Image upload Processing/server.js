@@ -6,8 +6,18 @@ const connectMongoDB=require('./config/db')
 
 //for image uploaded
 const multer=require('multer')
+
+const storage= multer.diskStorage({
+    destination :(req,file,cb)=>{
+
+        cb(null,'./media/user')
+    },
+    filename: (req,res,cb)=>{
+        cb(null,'profile-' + Date().rainbow() + '.png')
+    }
+})
 const upload=multer({
-    dest : './media/user'
+    storage : storage 
 })
 
 //Connect mongo DB init
