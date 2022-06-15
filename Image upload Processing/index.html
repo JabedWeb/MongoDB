@@ -14,9 +14,9 @@
             <div class="col-md-5">
                 <div class="card">
                     <div class="card-body">
-                        <h2>File Uploaded</h2>
+                        <h2>File Uploaded</h2> 
                         <hr>
-                        <form action="">
+                        <form action="http://localhost:5050/upload/" method="POST" enctype="multipart/form-data"> 
                             <label for="image_uploaded">
                                 <img style="width: 200px ; margin-right: 50px; cursor: pointer;" src="https://cdn-icons-png.flaticon.com/512/1160/1160358.png" alt="">
                             </label>
@@ -24,7 +24,7 @@
                             <div id="preview">
 
                             </div>
-                            <input id="image_uploaded" type="file" style="display:none;" multiple>
+                            <input name="photo" id="image_uploaded" type="file" style="display:none;" multiple>
                             <button class="btn btn-sm btn-primary">Upload</button>
                         </form>
                     </div>
@@ -68,7 +68,6 @@
                     pre+=`<img style="width : 200px" src="${URL.createObjectURL(image)}">`
                 }
                 preview.innerHTML=pre;
-            
         }
     </script>
 </body>
