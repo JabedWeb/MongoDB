@@ -4,6 +4,8 @@ const app=express();
 const colors=require('colors')
 const connectMongoDB=require('./config/db')
 
+const path=require('path')
+
 //for image uploaded
 const multer=require('multer')
 
@@ -12,8 +14,12 @@ const storage= multer.diskStorage({
 
         cb(null,'./media/user')
     },
-    filename: (req,res,cb)=>{
-        cb(null,'profile-' + Date().rainbow() + '.png')
+    filename: (req,file,cb)=>{
+        let extname=path.extname(file.originalname);
+
+        let fileName=Date.now()+'_'+ Math.round(Math.random()*1000000)+'.'+ extname;
+
+        cb(null,fileName)
     }
 })
 const upload=multer({
