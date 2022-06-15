@@ -45,6 +45,7 @@
 
             //===for single image upload=====////
            
+          /*
             let {type,size}=e.target.files[0]
             if(type=='image/webp' || type=='image/jpeg' || type=="image/jpg" || type=="image/png"){
                 console.log("okay");
@@ -56,7 +57,17 @@
             else{
                 alert('Invalid file format')
             }
+          */
 
+              //for multiple images uploaded
+              let images=e.target.files;
+                console.log("okay");
+                console.log(images); 
+                let pre='';
+                for(image of images){
+                    pre+=`<img style="width : 200px" src="${URL.createObjectURL(image)}">`
+                }
+                preview.innerHTML=pre;
             
         }
     </script>
