@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended :false}))
 
 //Photo Upload
 
-app.post('/upload',upload.single('photo') ,(req,res) =>{
+app.post('/upload',upload.array('photo') ,(req,res) =>{
     res.send("File send uploaded")
 })
 
