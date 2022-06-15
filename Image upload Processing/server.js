@@ -23,7 +23,19 @@ const storage= multer.diskStorage({
     }
 })
 const upload=multer({
-    storage : storage 
+    storage : storage,
+    limits : (1024*1024),
+    fileFilter :(req,file,cb)=>{
+
+        if(file.mimetype=='image/jpeg' || file.mimetype=='image/png' || file.mimetype=='image/png'){
+            cb(null,true)
+        }
+
+        else{
+            cb(console.log('file type invalid'))
+        }
+       
+    }
 })
 
 //Connect mongo DB init
@@ -39,8 +51,12 @@ app.use(express.urlencoded({extended :false}))
 
 
 //Photo Upload
+//controllers
 
 app.post('/upload',upload.array('photo') ,(req,res) =>{
+
+
+
     res.send("File send uploaded")
 })
 
