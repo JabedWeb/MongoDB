@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>  
 
     <script>
 
@@ -51,25 +51,6 @@
         const preview=document.getElementById('preview')
 
         image_uploaded.onchange=(e)=>{
-            //full tag
-            //console.log(e.target);
-            //to get files data
-
-            //===for single image upload=====////
-           
-          /*
-            let {type,size}=e.target.files[0]
-            if(type=='image/webp' || type=='image/jpeg' || type=="image/jpg" || type=="image/png"){
-                console.log("okay");
-
-                const image_url=URL.createObjectURL(e.target.files[0]);
-
-                preview.innerHTML=`<img style="width : 200px" src="${image_url}"/>`
-            }
-            else{
-                alert('Invalid file format')
-            }
-          */
 
               //for multiple images uploaded
               let images=e.target.files;
