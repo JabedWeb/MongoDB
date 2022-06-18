@@ -2,7 +2,6 @@ const dotenv=require('dotenv').config()
 const express =require('express');
 const app=express();
 const colors=require('colors')
-const connectMongoDB=require('./config/db')
 
 const path=require('path')
 
@@ -37,9 +36,6 @@ const upload=multer({
        
     }
 })
-
-//Connect mongo DB init
-connectMongoDB();
   
 //Environment Variables init
 const PORT =process.env.SERVER_PORT;
@@ -51,21 +47,10 @@ app.use(express.urlencoded({extended :false}))
 
 
 //Photo Upload
-//controllers
-
 app.post('/upload',upload.array('photo') ,(req,res) =>{
     
     res.send("File send uploaded")
 })
-
-
-
-
-//students route Use
-app.use('/api/students',require('./routes/students'))
-
-//admin route use
-app.use('/api/admin',require('./routes/admin'))
 
 //add express express listener with port
 app.listen(PORT,()=>{
