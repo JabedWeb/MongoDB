@@ -7,14 +7,7 @@ const path=require('path')
 
 //for image uploaded
 const multer=require('multer')
-console.log(multer);
-console.log(`${path}`.bgBlack.red);
-console.log(typeof( multer));
-console.log(typeof( express));
-console.log(typeof(path));
-console.log(typeof(app));
 
-console.log(multer.diskStorage);
 
 const storage= multer.diskStorage({
     destination :(req,file,cb)=>{
@@ -22,11 +15,21 @@ const storage= multer.diskStorage({
         cb(null,'./media/user')
     },
     filename: (req,file,cb)=>{
-        let extname=path.extname(file.originalname);
 
-        let fileName=Date.now()+'_'+ Math.round(Math.random()*1000000)+'.'+ extname;
+        if(file.fieldname=='photo'){
+            let extname=path.extname(file.originalname);
 
-        cb(null,fileName)
+            let fileName=Date.now()+'_'+ Math.round(Math.random()*1000000)+'.'+ extname;
+    
+            cb(null,fileName)
+        }
+        else if (file.fieldname=='cv'){
+            let date=new Date();
+            let currentDate=(date.getMonth+1)+'_'+date.getDate()+'_'+date.getFullYear;
+            let fileName=currentDate+'_'+file.originalname;
+            cb(null,fileName)
+        }
+
     }
 })
 const upload=multer({
@@ -34,13 +37,25 @@ const upload=multer({
     limits : (1024*1024),
     fileFilter :(req,file,cb)=>{
 
-        if(file.mimetype=='image/jpeg' || file.mimetype=='image/png' || file.mimetype=='image/png'){
-            cb(null,true)
+        if(file.fieldname=='photo'){
+            if(file.mimetype=='image/jpeg' || file.mimetype=='image/png' || file.mimetype=='image/png'){
+                cb(null,true)
+            }
+    
+            else{
+                cb(console.log('file type invalid'))
+            }
+        }
+        else if (file.fieldname=='cv'){
+            if(file.mimetype=='application/pdf'){
+                cb(null,true)
+            }
+            else{
+                cb(console.log('File name is invalid'))
+            }
         }
 
-        else{
-            cb(console.log('file type invalid'))
-        }
+       
        
     }
 })
@@ -58,7 +73,9 @@ const cpUpload=upload.fields([
     name : 'cv',
     maxCount : 1
    }
-])
+  ]);
+
+
 //Photo Upload
 app.post('/upload',cpUpload,(req,res) =>{
     
