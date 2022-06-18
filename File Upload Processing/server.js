@@ -7,6 +7,14 @@ const path=require('path')
 
 //for image uploaded
 const multer=require('multer')
+console.log(multer);
+console.log(`${path}`.bgBlack.red);
+console.log(typeof( multer));
+console.log(typeof( express));
+console.log(typeof(path));
+console.log(typeof(app));
+
+console.log(multer.diskStorage);
 
 const storage= multer.diskStorage({
     destination :(req,file,cb)=>{
@@ -40,14 +48,19 @@ const upload=multer({
 //Environment Variables init
 const PORT =process.env.SERVER_PORT;
 
-//server body init
-app.use(express.json())
-app.use(express.urlencoded({extended :false}))
 
-
-
+const cpUpload=upload.fields([
+    {
+    name : 'photo',
+    maxCount : 10
+   },
+   {
+    name : 'cv',
+    maxCount : 1
+   }
+])
 //Photo Upload
-app.post('/upload',upload.array('photo') ,(req,res) =>{
+app.post('/upload',cpUpload,(req,res) =>{
     
     res.send("File send uploaded")
 })
